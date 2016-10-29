@@ -8,28 +8,43 @@
 
 import UIKit
 import MapKit
+import CoreLocation
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
-    let regionRadius: CLLocationDistance = 4000
+    let locationManager = CLLocationManager()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let initialLocation = CLLocation(latitude: 42.354, longitude: -71.054)
+        if (CLLocationManager.locationServicesEnabled())
+        {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.requestWhenInUseAuthorization()
+            locationManager.startUpdatingLocation()
+            mapView.showsUserLocation = true
+        }
+    }
+
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [AnyObject]) {
+        let location = locations.last as! CLLocation
         
-        centerMapOnLocation(location: initialLocation)
+        let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+        
+        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.0001, longitudeDelta: 0.0001))
+//        let region = MKCoordinateRegionMakeWithDistance(center, 2000, 2000)
+//        let region = MKCoordinateRegionMake(center, MKCoordinateSpan(latitudeDelta: 0.0001, longitudeDelta: 0.0001))
+        
+        mapView.setRegion(region, animated: true)
+        
+        locationManager.stopUpdatingLocation()
     }
     
-    func centerMapOnLocation(location: CLLocation) {
-        let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate,
-                                                                  regionRadius,
-                                                                  regionRadius)
-        mapView.setRegion(coordinateRegion, animated: true)
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError){
+        print("Errors: " + error.localizedDescription)
     }
-
-
 
 }
 
