@@ -34,8 +34,6 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
         
         let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.0001, longitudeDelta: 0.0001))
-//        let region = MKCoordinateRegionMakeWithDistance(center, 2000, 2000)
-//        let region = MKCoordinateRegionMake(center, MKCoordinateSpan(latitudeDelta: 0.0001, longitudeDelta: 0.0001))
         
         mapView.setRegion(region, animated: true)
         
