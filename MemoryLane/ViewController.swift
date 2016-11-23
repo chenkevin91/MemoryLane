@@ -25,10 +25,17 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         
         if (CLLocationManager.locationServicesEnabled())
         {
-//            locationManager.delegate = self
-//            locationManager.desiredAccuracy = kCLLocationAccuracyBest
-//            locationManager.requestWhenInUseAuthorization()
-//            locationManager.startUpdatingLocation()
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.requestWhenInUseAuthorization()
+            locationManager.startUpdatingLocation()
+            guard locationManager.location != nil else {
+                centerOnLocation(location: CLLocation(latitude: 42.3601, longitude: -71.0589))
+                mapView.showsUserLocation = true
+                print(locationManager.location?.coordinate)
+                print(mapView.userLocation.coordinate)
+                return
+            }
             centerOnLocation(location: locationManager.location!)
             mapView.showsUserLocation = true
             

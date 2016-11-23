@@ -21,12 +21,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="9Cx-c8-Xr0">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="9Cx-c8-Xr0">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </mapView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="9Cx-c8-Xr0" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="35j-Ud-Zjy"/>
+                            <constraint firstItem="9Cx-c8-Xr0" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="CFC-Ku-CzH"/>
+                            <constraint firstAttribute="trailing" secondItem="9Cx-c8-Xr0" secondAttribute="trailing" id="h81-QH-152"/>
+                            <constraint firstItem="9Cx-c8-Xr0" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="yCP-ze-jRf"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="MEMORY LN" id="8dJ-oP-ScG">
                         <barButtonItem key="leftBarButtonItem" image="Gear" id="r7P-vp-eb3">
