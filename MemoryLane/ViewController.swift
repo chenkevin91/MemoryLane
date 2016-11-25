@@ -33,7 +33,8 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
             locationManager.requestWhenInUseAuthorization()
             locationManager.startUpdatingLocation()
-            guard locationManager.location != nil else {
+            guard locationManager.location != nil else
+            {
                 centerOnLocation(location: CLLocation(latitude: 42.3601, longitude: -71.0589))
                 mapView.showsUserLocation = true
                 print(locationManager.location?.coordinate)
@@ -47,11 +48,18 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
             print(mapView.userLocation.coordinate)
         }
         
-        let asset = PHAsset.fetchAssets(with: PHAssetMediaType.image, options: nil)
-        print("assetDate: \(asset.lastObject?.creationDate)")
-        print("assetLocation: \(asset.lastObject?.location)")
+        let assets = PHAsset.fetchAssets(with: PHAssetMediaType.image, options: nil)
         
-        populateMap(withAssetLocation: (asset.lastObject?.location)!)
+        for index in 0...(assets.count - 1)
+        {
+            print("assetDate: \(assets.object(at: index).creationDate)")
+            guard assets.object(at: index).location != nil else
+            {
+                continue
+            }
+            populateMap(withAssetLocation: assets.object(at: index).location!)
+        }
+        
     }
 
 //    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [AnyObject]) 
