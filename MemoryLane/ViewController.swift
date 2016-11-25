@@ -9,14 +9,18 @@
 import UIKit
 import MapKit
 import CoreLocation
+import PhotosUI
 
-class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
+
+class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate
+{
 
     @IBOutlet weak var mapView: MKMapView!
     let locationManager = CLLocationManager()
     
 
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
         
         self.navigationController?.navigationBar.barTintColor = UIColor.init(red: 5/255, green: 167/255, blue: 91/255, alpha: 1)
@@ -42,9 +46,16 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
             print(locationManager.location?.coordinate)
             print(mapView.userLocation.coordinate)
         }
+        
+        let asset = PHAsset.fetchAssets(with: PHAssetMediaType.image, options: nil)
+        print("assetDate: \(asset.lastObject?.creationDate)")
+        print("assetLocation: \(asset.lastObject?.location)")
+        
+        populateMap(withAssetLocation: (asset.lastObject?.location)!)
     }
 
-//    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [AnyObject]) {
+//    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [AnyObject]) 
+//    {
 //        let location = locations.last as! CLLocation
 //        let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
 //        let span = MKCoordinateSpanMake(0.075, 0.075)
@@ -58,19 +69,41 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
 //        print("Errors: " + error.localizedDescription)
 //    }
     
-    func centerOnLocation(location: CLLocation) {
+    func centerOnLocation(location: CLLocation)
+    {
         let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
         let span = MKCoordinateSpanMake(0.0075, 0.0075)
         let region = MKCoordinateRegion(center: center, span: span)
         
         mapView.setRegion(region, animated: true)
     }
+    
+    func populateMap(withAssetLocation location: CLLocation)
+    {
+//        let testArray = [CLLocationCoordinate2D(latitude: 42.3599, longitude: -71.0587), CLLocationCoordinate2D(latitude: 42.3603, longitude: -71.0591),
+//                         CLLocationCoordinate2D(latitude: 42.3607, longitude: -71.0595), CLLocationCoordinate2D(latitude: 42.3611, longitude: -71.0599)]
+//        
+//        for coordinate in testArray {
+//            let annotation = MKPointAnnotation()
+//            annotation.coordinate = coordinate
+//            mapView.addAnnotation(annotation)
+//        }
+        
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = location.coordinate
+        mapView.addAnnotation(annotation)
+        
+    }
+    
+    
  
 }
  
 
-extension ViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    @IBAction func cameraButtonAction(_ sender: UIBarButtonItem) {
+extension ViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate
+{
+    @IBAction func cameraButtonAction(_ sender: UIBarButtonItem)
+    {
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
             let imagePicker = UIImagePickerController()
             imagePicker.delegate = self
@@ -80,6 +113,8 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
         }
         
     }
-
+    
+    
+    
 }
 

@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string></string>
+	<string>App needs photo library access</string>
 	<key>NSCameraUsageDescription</key>
-	<string></string>
+	<string>App needs camera access</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>App needs location services</string>
 	<key>LSApplicationCategoryType</key>
