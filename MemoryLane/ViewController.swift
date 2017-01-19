@@ -12,7 +12,7 @@ import CoreLocation
 import PhotosUI
 
 
-class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate
+class ViewController: UIViewController, CLLocationManagerDelegate
 {
 
     @IBOutlet weak var mapView: MKMapView!
@@ -101,10 +101,9 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         annotation.coordinate = location.coordinate
         mapView.addAnnotation(annotation)
         
+        let test = MKAnnotationView()
+        
     }
-    
-    
- 
 }
  
 
@@ -121,8 +120,10 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
         }
         
     }
-    
-    
+}
+
+extension ViewController: MKMapViewDelegate
+{
     
 }
 
