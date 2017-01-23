@@ -13,11 +13,10 @@ import PhotosUI
 final class PhotoCollectionViewController: UICollectionViewController
 {
     var photoAssets = PHAsset.fetchAssets(with: PHAssetMediaType.image, options: nil)
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //var photoAssets = PHAsset.fetchAssets(with: PHAssetMediaType.image, options: nil)
         
         self.collectionView?.reloadData()
           
@@ -43,13 +42,15 @@ extension PhotoCollectionViewController {
         
         let photoManager = PHImageManager.default()
 
+        if cell.tag != 0 {
+            photoManager.cancelImageRequest(PHImageRequestID(cell.tag))
+        }
+        
         let asset = photoAssets[indexPath.row]
         
-        cell.photoImageView.tag = Int(photoManager.requestImage(for: asset, targetSize: CGSize(width: 100.0, height: 100.0), contentMode: PHImageContentMode.aspectFit, options: nil, resultHandler: { (result, _) in
+        cell.photoImageView.tag = Int(photoManager.requestImage(for: asset, targetSize: CGSize(width: 25.0, height:25.0), contentMode: PHImageContentMode.default, options: nil, resultHandler: { (result, _) in
             cell.photoImageView.image = result
         }))
-        
-        cell.photoImageView.contentMode = .scaleToFill
         
         return cell
     }

@@ -9,13 +9,17 @@
 import UIKit
 import MapKit
 import CoreLocation
+import Photos
 import PhotosUI
 
 
-class ViewController: UIViewController, CLLocationManagerDelegate
+class ViewController: UICollectionViewController, CLLocationManagerDelegate
 {
 
     @IBOutlet weak var mapView: MKMapView!
+    
+    var photoAssets = PHAsset.fetchAssets(with: PHAssetMediaType.image, options: nil)
+    
     let locationManager = CLLocationManager()
     
 
@@ -125,5 +129,43 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
 extension ViewController: MKMapViewDelegate
 {
     
+}
+
+private extension ViewController
+{
+    func photoForIndexPath(indexPath: IndexPath) -> PHAsset
+    {
+        return photoAssets[indexPath.row]
+    }
+}
+
+extension ViewController
+{
+    override func collectionView(_ collectionView: UICollectionView,
+                                 numberOfItemsInSection section: Int) -> Int
+    {
+        return photoAssets.count
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView,
+                                 cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
+    {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCell",
+                                                      for: indexPath) as! PhotoCollectionCell
+        
+        let photoManager = PHImageManager.default()
+        
+        if cell.tag != 0 {
+            photoManager.cancelImageRequest(PHImageRequestID(cell.tag))
+        }
+        
+        let asset = photoAssets[indexPath.row]
+        
+        cell.photoImageView.tag = Int(photoManager.requestImage(for: asset, targetSize: CGSize(width: 25.0, height:25.0), contentMode: PHImageContentMode.default, options: nil, resultHandler: { (result, _) in
+            cell.photoImageView.image = result
+        }))
+        
+        return cell
+    }
 }
 
